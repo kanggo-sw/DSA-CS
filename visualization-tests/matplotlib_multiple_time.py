@@ -1,34 +1,36 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from dateutil.parser import parse
 
-df = pd.read_csv("https://github.com/selva86/datasets/raw/master/economics.csv")
+# Import Data
+df = pd.read_csv('https://github.com/selva86/datasets/raw/master/AirPassengers.csv')
 
-x = df['date']
-y1 = df['psavert']
-y2 = df['unemploy']
+# Prepare data
+df['year'] = [parse(d).year for d in df.date]
+df['month'] = [parse(d).strftime('%b') for d in df.date]
+years = df['year'].unique()
 
-# Plot Line1 (Left Y Axis)
-fig, ax1 = plt.subplots(1, 1, figsize=(16, 9), dpi=80)
-ax1.plot(x, y1, color='tab:red')
+# Draw Plot
+mycolors = ['tab:red', 'tab:blue', 'tab:green', 'tab:orange', 'tab:brown', 'tab:grey', 'tab:pink', 'tab:olive', 'deeppink', 'steelblue', 'firebrick', 'mediumseagreen']
+plt.figure(figsize=(16,10), dpi= 80)
 
-# Plot Line2 (Right Y Axis)
-ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-ax2.plot(x, y2, color='tab:blue')
+for i, y in enumerate(years):
+    plt.plot('month', 'traffic', data=df.loc[df.year==y, :], color=mycolors[i], label=y)
+    plt.text(df.loc[df.year==y, :].shape[0]-.9, df.loc[df.year==y, 'traffic'][-1:].values[0], y, fontsize=12, color=mycolors[i])
 
-# Decorations
-# ax1 (left Y axis)
-ax1.set_xlabel('Year', fontsize=20)
-ax1.tick_params(axis='x', rotation=0, labelsize=12)
-ax1.set_ylabel('Personal Savings Rate', color='tab:red', fontsize=20)
-ax1.tick_params(axis='y', rotation=0, labelcolor='tab:red')
-ax1.grid(alpha=.4)
+# Decoration
+plt.ylim(50,750)
+plt.xlim(-0.3, 11)
+plt.ylabel('$Air Traffic$')
+plt.yticks(fontsize=12, alpha=.7)
+plt.title("Monthly Seasonal Plot: Air Passengers Traffic (1949 - 1969)", fontsize=22)
+plt.grid(axis='y', alpha=.3)
 
-# ax2 (right Y axis)
-ax2.set_ylabel("# Unemployed (1000's)", color='tab:blue', fontsize=20)
-ax2.tick_params(axis='y', labelcolor='tab:blue')
-ax2.set_xticks(np.arange(0, len(x), 60))
-ax2.set_xticklabels(x[::60], rotation=90, fontdict={'fontsize': 10})
-ax2.set_title("Personal Savings Rate vs Unemployed: Plotting in Secondary Y Axis", fontsize=22)
-fig.tight_layout()
+# Remove borders
+plt.gca().spines["top"].set_alpha(0.0)
+plt.gca().spines["bottom"].set_alpha(0.5)
+plt.gca().spines["right"].set_alpha(0.0)
+plt.gca().spines["left"].set_alpha(0.5)
+# plt.legend(loc='upper right', ncol=2, fontsize=12)
 plt.show()
