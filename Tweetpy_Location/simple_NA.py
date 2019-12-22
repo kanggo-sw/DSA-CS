@@ -4,11 +4,11 @@ import os
 import preprocessor.api as p
 import tweepy
 
-consumer_key = 'p7x4IB53L2HAS2n697YC4sUOz'
-consumer_secret = 'f2mo9T10WtaiJKzYHI6ObR9M52lF6dak0vq6AYgzYlaHGIfXRM'
+consumer_key = 'AAAAAAAAAAAAAAAAAAAAAAA'
+consumer_secret = 'BBBBBBBBBBBBBBBBBBBBB'
 
-access_token = '1207310789058551808-9RhMagAjXU3oPuE27cmfURmUOmhI9C'
-access_token_secret = 'R5xZXKvnZQZB7iQ1jTBpi2d8XHgvul6YQ0z7pfPWvheSg'
+access_token = 'AAAAAAAAAAAAAAAAAAAAAAA'
+access_token_secret = 'BBBBBBBBBBBBBBBBBBBBB'
 
 # perform authentication
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
